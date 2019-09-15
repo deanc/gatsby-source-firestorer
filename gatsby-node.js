@@ -10,33 +10,30 @@ const getDigest = id =>
 
 exports.sourceNodes = async (
   { boundActionCreators },
-  { types, credential, appConfig }
+  { types, credential }
 ) => {
-  try {
-    if (firebase.apps || !firebase.apps.length) {
-      const cfg = appConfig ? appConfig : {credential: firebase.credential.cert(credential)}
-      firebase.initializeApp(cfg);
-    }
+
+  try{
+    firebase.initializeApp({ credential: firebase.credential.cert(credential) });
   } catch (e) {
-    report.warn(
-      'Could not initialize Firebase. Please check `credential` property in gatsby-config.js'
-    );
+    report.warn('Could not initialize Firebase. Please check `credential` property in gatsby-config.js');
     report.warn(e);
     return;
   }
+
   const db = firebase.firestore();
   db.settings({
-    timestampsInSnapshots: true,
+    timestampsInSnapshots: true
   });
 
-  const { createNode } = boundActionCreators;
+  const { createNode, createNodeField } = boundActionCreators;
 
   const promises = types.map(
-    async ({ collection, type, map = node => node }) => {
+    async ({ collection, type, populate, map = node => node }) => {
       const snapshot = await db.collection(collection).get();
       for (let doc of snapshot.docs) {
         const contentDigest = getDigest(doc.id);
-        createNode(
+        const node = createNode(
           Object.assign({}, map(doc.data()), {
             id: doc.id,
             parent: null,
@@ -47,10 +44,13 @@ exports.sourceNodes = async (
             },
           })
         );
+
         Promise.resolve();
       }
     }
   );
+
   await Promise.all(promises);
+
   return;
 };
