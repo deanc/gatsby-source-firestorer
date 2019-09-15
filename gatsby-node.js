@@ -32,7 +32,7 @@ exports.sourceNodes = async (
 
   const promises = types.map(
     async ({ collection, type, populate, map = node => node }) => {
-      const snapshot = await db.collection(collection).get();
+      const snapshot = await db.collection(collection).get().catch(e => report.warn(e));
       for (let doc of snapshot.docs) {
         const contentDigest = getDigest(doc.id);
         const node = createNode(
@@ -52,7 +52,7 @@ exports.sourceNodes = async (
     }
   );
 
-  await Promise.all(promises);
+  await Promise.all(promises).catch(e => report.warn(e));
 
   return;
 };
