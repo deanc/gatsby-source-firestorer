@@ -9,14 +9,12 @@ const getDigest = id =>
     .digest('hex');
 
 exports.sourceNodes = async (
-  { boundActionCreators },
+  { actions },
   { types, credential }
 ) => {
 
   try{
-    if (firebase.apps || !firebase.apps.length) {
-      firebase.initializeApp({credential: firebase.credential.cert(credential)});
-    }
+    firebase.initializeApp({ credential: firebase.credential.cert(credential) });
   } catch (e) {
     report.warn('Could not initialize Firebase. Please check `credential` property in gatsby-config.js');
     report.warn(e);
@@ -24,18 +22,15 @@ exports.sourceNodes = async (
   }
 
   const db = firebase.firestore();
-  db.settings({
-    timestampsInSnapshots: true
-  });
 
-  const { createNode, createNodeField } = boundActionCreators;
+  const { createNode } = actions;
 
   const promises = types.map(
-    async ({ collection, type, populate, map = node => node }) => {
-      const snapshot = await db.collection(collection).get().catch(e => report.warn(e));
+    async ({ collection, type, map = node => node }) => {
+      const snapshot = await db.collection(collection).get();
       for (let doc of snapshot.docs) {
         const contentDigest = getDigest(doc.id);
-        const node = createNode(
+        createNode(
           Object.assign({}, map(doc.data()), {
             id: doc.id,
             parent: null,
@@ -52,7 +47,7 @@ exports.sourceNodes = async (
     }
   );
 
-  await Promise.all(promises).catch(e => report.warn(e));
+  await Promise.all(promises);
 
   return;
 };

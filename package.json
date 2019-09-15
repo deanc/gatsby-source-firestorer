@@ -7,7 +7,7 @@
   "author": "Tom Phillips <info@tomphill.co.uk>",
   "license": "MIT",
   "dependencies": {
-    "firebase-admin": "^6.5.1",
+    "firebase-admin": "^8.5.0",
     "gatsby-cli": "^1.1.58"
   },
   "files": [
@@ -19,8 +19,5 @@
     "gatsby-plugin",
     "gatsby-source-plugin",
     "firebase"
-  ],
-  "devDependencies": {
-    "rollup-plugin-node-resolve": "^5.2.0"
-  }
+  ]
 }
