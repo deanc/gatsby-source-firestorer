@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-source-firestore",
+  "name": "gatsby-firesource",
   "version": "2.0.0",
-  "description": "Gatsby source plugin for building websites using the Firestore as a data source.",
+  "description": "Gatsby source plugin for building websites using Firestore as a data source.",
   "main": "gatsby-node.js",
   "repository": "github:tomphill/gatsby-source-firestore",
   "author": "Tom Phillips <info@tomphill.co.uk>",
