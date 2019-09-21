@@ -1,4 +1,4 @@
-# gatsby-source-firestore [![npm version](https://badge.fury.io/js/gatsby-source-firestore.svg)](https://badge.fury.io/js/gatsby-source-firestore)
+# tomphill/gatsby-source-firestore [![npm version](https://badge.fury.io/js/gatsby-source-firestore.svg)](https://badge.fury.io/js/gatsby-source-firestore)
 
 Gatsby source plugin for building websites using the Firestore as a data source.
 
