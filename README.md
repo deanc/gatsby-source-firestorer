@@ -7,14 +7,14 @@ latest Gatsby params.
 
 1. Get a private key for your Firebase project.
 2. Put that private key somewhere in your Gatsby project.
-3. `$ yarn add gatsby-source-firestore`
+3. `$ yarn add @deanc/gatsby-source-firestore`
 4. Configure `gatsby-config.js`
 
 ```javascript
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-source-firestore',
+      resolve: '@deanc/gatsby-source-firestore',
       options: {
         credential: require('./firebase.credentials.json'),
         types: [
