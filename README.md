@@ -1,4 +1,4 @@
-# deanc/gatsby-source-firestorer [![npm version](https://badge.fury.io/js/gatsby-source-firestorer.svg)](https://badge.fury.io/js/gatsby-source-firestorer)
+# deanc/gatsby-source-firestorer [![npm version](https://badge.fury.io/js/%40deanc%2Fgatsby-source-firestorer.svg)](https://badge.fury.io/js/%40deanc%2Fgatsby-source-firestorer)
 
 Gatsby source plugin for building websites using the Firestore as a data source. Forked from a couple of other versions and updated to use
 latest Gatsby params.
@@ -77,5 +77,5 @@ No maintenance/warranty are provided. Feel free to send in pull requests.
 
 # Acknowledgement
 
-- [gatsby-source-firebase](https://github.com/ReactTraining/gatsby-source-firebase)
-- [gatsby-source-firebase](https://github.com/tomphill/gatsby-source-firestore)
+- [gatsby-source-firebase (Original)](https://github.com/ReactTraining/gatsby-source-firebase)
+- [gatsby-source-firebase (Most recent fork)](https://github.com/tomphill/gatsby-source-firestore)
