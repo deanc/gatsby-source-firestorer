@@ -1,22 +1,18 @@
 const report = require('gatsby-cli/lib/reporter');
 const firebase = require('firebase-admin');
-const crypto = require('crypto');
-
-const getDigest = id =>
-  crypto
-    .createHash('md5')
-    .update(id)
-    .digest('hex');
 
 exports.sourceNodes = async (
-  { actions },
+  { actions, createNodeId, createContentDigest },
   { types, credential }
 ) => {
-
-  try{
-    firebase.initializeApp({ credential: firebase.credential.cert(credential) });
+  try {
+    firebase.initializeApp({
+      credential: firebase.credential.cert(credential),
+    });
   } catch (e) {
-    report.warn('Could not initialize Firebase. Please check `credential` property in gatsby-config.js');
+    report.warn(
+      'Could not initialize Firebase. Please check `credential` property in gatsby-config.js'
+    );
     report.warn(e);
     return;
   }
@@ -29,19 +25,18 @@ exports.sourceNodes = async (
     async ({ collection, type, map = node => node }) => {
       const snapshot = await db.collection(collection).get();
       for (let doc of snapshot.docs) {
-        const contentDigest = getDigest(doc.id);
-        createNode(
-          Object.assign({}, map(doc.data()), {
-            id: doc.id,
-            parent: null,
-            children: [],
-            internal: {
-              type,
-              contentDigest,
-            },
-          })
-        );
-
+        const nodeData = map(doc.data());
+        const nodeMeta = {
+          id: doc.id,
+          parent: null,
+          children: [],
+          internal: {
+            type,
+            content: JSON.stringify(nodeData),
+            contentDigest: createContentDigest(nodeData),
+          },
+        };
+        createNode(Object.assign({}, nodeData, nodeMeta));
         Promise.resolve();
       }
     }
