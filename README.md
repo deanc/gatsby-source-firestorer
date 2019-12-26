@@ -1,8 +1,10 @@
-# tomphill/gatsby-source-firestore [![npm version](https://badge.fury.io/js/gatsby-source-firestore.svg)](https://badge.fury.io/js/gatsby-source-firestore)
+# deanc/gatsby-source-firestorer [![npm version](https://badge.fury.io/js/gatsby-source-firestorer.svg)](https://badge.fury.io/js/gatsby-source-firestorer)
 
-Gatsby source plugin for building websites using the Firestore as a data source.
+Gatsby source plugin for building websites using the Firestore as a data source. Forked from a couple of other versions and updated to use
+latest Gatsby params.
 
 # Usage
+
 1. Get a private key for your Firebase project.
 2. Put that private key somewhere in your Gatsby project.
 3. `$ yarn add gatsby-source-firestore`
@@ -14,7 +16,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-firestore',
       options: {
-        credential: require("./firebase.json"),
+        credential: require('./firebase.credentials.json'),
         types: [
           {
             type: 'Book',
@@ -39,10 +41,10 @@ module.exports = {
     },
   ],
 };
-
 ```
 
 5. To query
+
 ```graphql
 {
   allBooks {
@@ -60,16 +62,20 @@ module.exports = {
 ```
 
 # Configurations
-Key|Description
----|---
-credential|Require your private key here
-types| Array of types, which require the following 3 keys
-type|The type of the collection, which will be used in GraphQL queries. Eg, when `type = Book`, the GraphQL types are named `book` and `allBook`
-collection|The name of the collections in Firestore. Nested collections are **not** tested.
-map|A function to map your data in Firestore to Gatsby nodes, utilize the undocumented `___NODE` to link between nodes
+
+| Key        | Description                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| credential | Require your private key here                                                                                                               |
+| types      | Array of types, which require the following 3 keys                                                                                          |
+| type       | The type of the collection, which will be used in GraphQL queries. Eg, when `type = Book`, the GraphQL types are named `book` and `allBook` |
+| collection | The name of the collections in Firestore. Nested collections are **not** tested.                                                            |
+| map        | A function to map your data in Firestore to Gatsby nodes, utilize the undocumented `___NODE` to link between nodes                          |
 
 # Disclaimer
-This project is created solely to suit our requirements, no maintenance/warranty are provided. Feel free to send in pull requests.
+
+No maintenance/warranty are provided. Feel free to send in pull requests.
 
 # Acknowledgement
-[gatsby-source-firebase](https://github.com/ReactTraining/gatsby-source-firebase)
+
+- [gatsby-source-firebase](https://github.com/ReactTraining/gatsby-source-firebase)
+- [gatsby-source-firebase](https://github.com/tomphill/gatsby-source-firestore)
