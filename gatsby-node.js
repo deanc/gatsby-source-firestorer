@@ -1,17 +1,28 @@
 const report = require('gatsby-cli/lib/reporter');
-const firebase = require('firebase-admin');
+const firebaseAdmin = require('firebase-admin');
+const firebaseWeb = require('firebase');
+require('firebase/firestore');
 
 exports.sourceNodes = async (
-  { actions, createNodeId, createContentDigest },
-  { types, credential }
+  { actions, createContentDigest },
+  { types, credential, config }
 ) => {
+  let firebase = firebaseWeb;
+  if (credential) {
+    firebase = firebaseAdmin;
+  }
+
   try {
-    firebase.initializeApp({
-      credential: firebase.credential.cert(credential),
-    });
+    if (credential) {
+      firebase.initializeApp({
+        credential: firebase.credential.cert(credential),
+      });
+    } else {
+      firebase.initializeApp(config);
+    }
   } catch (e) {
     report.warn(
-      'Could not initialize Firebase. Please check `credential` property in gatsby-config.js'
+      'Could not initialize Firebase. Please check `credential` property in gatsby-config.js or supply a valid config object'
     );
     report.warn(e);
     return;
@@ -32,7 +43,6 @@ exports.sourceNodes = async (
           children: [],
           internal: {
             type,
-            content: JSON.stringify(nodeData),
             contentDigest: createContentDigest(nodeData),
           },
         };

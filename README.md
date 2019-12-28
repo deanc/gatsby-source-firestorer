@@ -3,7 +3,64 @@
 Gatsby source plugin for building websites using the Firestore as a data source. Forked from a couple of other versions and updated to use
 latest Gatsby params.
 
+# Authentication
+
+You have two ways to authenticate to Firebase.
+
+1. (Reccommended) Supply a valid firebaseConfig object with read-only credentials. [Instructions here](https://support.google.com/firebase/answer/7015592#web).
+2. Get a private key for your Firebase project from the Firebase console.
+
 # Usage
+
+## Method 1: Standard web SDK (Reccommended)
+
+1. Supply a valid firebaseConfig object
+2. `$ yarn add @deanc/gatsby-source-firestore`
+3. Configure `gatsby-config.js`
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: '@deanc/gatsby-source-firestore',
+      options: {
+        config: {
+          apiKey: 'api-key',
+          authDomain: 'project-id.firebaseapp.com',
+          databaseURL: 'https://project-id.firebaseio.com',
+          storageBucket: 'yourapp.appspot.com',
+          projectId: 'project-id',
+          messagingSenderId: 'sender-id',
+          appId: 'app-id',
+          measurementId: 'measurement-id',
+        },
+        types: [
+          {
+            type: 'Book',
+            collection: 'books',
+            map: doc => ({
+              title: doc.title,
+              isbn: doc.isbn,
+              author___NODE: doc.author.id,
+            }),
+          },
+          {
+            type: 'Author',
+            collection: 'authors',
+            map: doc => ({
+              name: doc.name,
+              country: doc.country,
+              books___NODE: doc.books.map(book => book.id),
+            }),
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+## Method 2: Firebase Admin SDK
 
 1. Get a private key for your Firebase project.
 2. Put that private key somewhere in your Gatsby project.
@@ -43,7 +100,9 @@ module.exports = {
 };
 ```
 
-5. To query
+# Querying
+
+To query
 
 ```graphql
 {
@@ -66,6 +125,7 @@ module.exports = {
 | Key        | Description                                                                                                                                 |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | credential | Require your private key here                                                                                                               |
+| config     | Put a valid firebaseConfig object here                                                                                                      |
 | types      | Array of types, which require the following 3 keys                                                                                          |
 | type       | The type of the collection, which will be used in GraphQL queries. Eg, when `type = Book`, the GraphQL types are named `book` and `allBook` |
 | collection | The name of the collections in Firestore. Nested collections are **not** tested.                                                            |
