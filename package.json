@@ -1,6 +1,6 @@
 {
   "name": "@deanc/gatsby-source-firestorer",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Gatsby source plugin for building websites using Firestore as a data source.",
   "main": "gatsby-node.js",
   "repository": "github:deanc/gatsby-source-firestorer",
