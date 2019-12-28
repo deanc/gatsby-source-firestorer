@@ -43,7 +43,6 @@ exports.sourceNodes = async (
           children: [],
           internal: {
             type,
-            content: JSON.stringify(nodeData),
             contentDigest: createContentDigest(nodeData),
           },
         };
