@@ -3,8 +3,8 @@ const firebaseAdmin = require('firebase-admin');
 const firebaseWeb = require('firebase');
 require('firebase/firestore');
 
-const applyConditions = (collection, conditions) => {
-  if (!conditions || !conditions.length) {
+const applyConditions = (collection, conditions = []) => {
+  if (!conditions.length) {
     return collection;
   }
   return conditions.reduce(
