@@ -43,6 +43,7 @@ module.exports = {
               isbn: doc.isbn,
               author___NODE: doc.author.id,
             }),
+            conditions: [['status', '==', 'public']], // optional
           },
           {
             type: 'Author',
