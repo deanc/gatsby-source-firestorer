@@ -40,8 +40,11 @@ exports.sourceNodes = async (
 
   const promises = types.map(
     async ({ collection, type, map = node => node, conditions }) => {
-      const collection = applyConditions(db.collection(collection), conditions);
-      const snapshot = await collection.get();
+      const conditionedCollection = applyConditions(
+        db.collection(collection),
+        conditions
+      );
+      const snapshot = await conditionedCollection.get();
       for (let doc of snapshot.docs) {
         const nodeData = map(doc.data());
         const nodeMeta = {
