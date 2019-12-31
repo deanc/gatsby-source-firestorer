@@ -3,6 +3,12 @@ const firebaseAdmin = require('firebase-admin');
 const firebaseWeb = require('firebase');
 require('firebase/firestore');
 
+const applyConditions = (collection, conditions) =>
+  conditions.reduce(
+    (coll, condition) => coll.where.apply(coll, condition),
+    collection
+  );
+
 exports.sourceNodes = async (
   { actions, createContentDigest },
   { types, credential, config }
@@ -33,8 +39,9 @@ exports.sourceNodes = async (
   const { createNode } = actions;
 
   const promises = types.map(
-    async ({ collection, type, map = node => node }) => {
-      const snapshot = await db.collection(collection).get();
+    async ({ collection, type, map = node => node, conditions }) => {
+      const collection = applyConditions(db.collection(collection), conditions);
+      const snapshot = await collection.get();
       for (let doc of snapshot.docs) {
         const nodeData = map(doc.data());
         const nodeMeta = {
