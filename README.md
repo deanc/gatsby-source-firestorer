@@ -83,6 +83,7 @@ module.exports = {
               isbn: doc.isbn,
               author___NODE: doc.author.id,
             }),
+            conditions: [['status', '==', 'public']], // optional
           },
           {
             type: 'Author',
@@ -122,14 +123,15 @@ To query
 
 # Configurations
 
-| Key        | Description                                                                                                                                 |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| credential | Require your private key here                                                                                                               |
-| config     | Put a valid firebaseConfig object here                                                                                                      |
-| types      | Array of types, which require the following 3 keys                                                                                          |
-| type       | The type of the collection, which will be used in GraphQL queries. Eg, when `type = Book`, the GraphQL types are named `book` and `allBook` |
-| collection | The name of the collections in Firestore. Nested collections are **not** tested.                                                            |
-| map        | A function to map your data in Firestore to Gatsby nodes, utilize the undocumented `___NODE` to link between nodes                          |
+| Key        | Description                                                                                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| credential | Require your private key here                                                                                                                          |
+| config     | Put a valid firebaseConfig object here                                                                                                                 |
+| types      | Array of types, which require some of the following 3 keys                                                                                             |
+| type       | (required) The type of the collection, which will be used in GraphQL queries. Eg, when `type = Book`, the GraphQL types are named `book` and `allBook` |
+| collection | (required) The name of the collections in Firestore. Nested collections are **not** tested.                                                            |
+| map        | (required) A function to map your data in Firestore to Gatsby nodes, utilize the undocumented `___NODE` to link between nodes                          |
+| conditions | (optional) An array of where conditions. Corresponds directly to: https://firebase.google.com/docs/firestore/query-data/queries#simple_queries         |
 
 # Disclaimer
 
