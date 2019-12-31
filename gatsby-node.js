@@ -3,11 +3,15 @@ const firebaseAdmin = require('firebase-admin');
 const firebaseWeb = require('firebase');
 require('firebase/firestore');
 
-const applyConditions = (collection, conditions) =>
-  conditions.reduce(
+const applyConditions = (collection, conditions) => {
+  if (!conditions || !conditions.length) {
+    return collection;
+  }
+  return conditions.reduce(
     (coll, condition) => coll.where.apply(coll, condition),
     collection
   );
+};
 
 exports.sourceNodes = async (
   { actions, createContentDigest },
