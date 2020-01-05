@@ -1,7 +1,7 @@
 {
   "name": "@deanc/gatsby-source-firestorer",
   "version": "5.0.2",
-  "description": "Gatsby source plugin for building websites using Firestore as a data source.",
+  "description": "Gatsby source plugin for building websites using Firestore as a data source. Extra features include conditional queries and more secure use of credentials.",
   "main": "gatsby-node.js",
   "repository": "github:deanc/gatsby-source-firestorer",
   "author": "Dean Clatworthy",
