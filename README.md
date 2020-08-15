@@ -7,22 +7,22 @@ latest Gatsby params.
 
 You have two ways to authenticate to Firebase.
 
-1. (Reccommended) Supply a valid firebaseConfig object with read-only credentials. [Instructions here](https://support.google.com/firebase/answer/7015592#web).
+1. (Recommended) Supply a valid firebaseConfig object with read-only credentials. [Instructions here](https://support.google.com/firebase/answer/7015592#web).
 2. Get a private key for your Firebase project from the Firebase console.
 
 # Usage
 
-## Method 1: Standard web SDK (Reccommended)
+## Method 1: Standard web SDK (Recommended)
 
 1. Supply a valid firebaseConfig object
-2. `$ yarn add @deanc/gatsby-source-firestore`
+2. `$ yarn add @deanc/gatsby-source-firestorer`
 3. Configure `gatsby-config.js`
 
 ```javascript
 module.exports = {
   plugins: [
     {
-      resolve: '@deanc/gatsby-source-firestore',
+      resolve: '@deanc/gatsby-source-firestorer',
       options: {
         config: {
           apiKey: 'api-key',
@@ -65,14 +65,14 @@ module.exports = {
 
 1. Get a private key for your Firebase project.
 2. Put that private key somewhere in your Gatsby project.
-3. `$ yarn add @deanc/gatsby-source-firestore`
+3. `$ yarn add @deanc/gatsby-source-firestorer`
 4. Configure `gatsby-config.js`
 
 ```javascript
 module.exports = {
   plugins: [
     {
-      resolve: '@deanc/gatsby-source-firestore',
+      resolve: '@deanc/gatsby-source-firestorer',
       options: {
         credential: require('./firebase.credentials.json'),
         types: [
